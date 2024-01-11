@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
     ];
@@ -42,4 +43,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function linkLists()
+    {
+        return $this->hasMany(LinkList::class, 'owner_id');
+    }
+
+    public function addLinkList($attributes)
+    {
+        return $this->linkLists()->create($attributes);
+    }
 }
