@@ -21,6 +21,11 @@ class LinkListsController extends Controller
         return redirect("/{$user->username}/".request('slug'));
     }
 
+    public function create()
+    {
+        return inertia('LinkLists/Create');
+    }
+
     private function requestValidate()
     {
         return request()->validate([

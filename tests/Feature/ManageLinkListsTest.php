@@ -24,7 +24,9 @@ class ManageLinkListsTest extends TestCase
         $attribute = LinkList::factory()->raw();
         $attribute['owner_id'] = $user->id;
         $attribute['links'] = Link::factory(2)->raw();
-        // dd($attribute);
+
+        $this->actingAs($user)->get('/link-lists/create')->assertOK();
+
         $this->actingAs($user)
             ->post('/link-lists', $attribute)
             ->assertRedirect("/{$user->username}/{$attribute['slug']}");
