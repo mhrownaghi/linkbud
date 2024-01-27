@@ -40,3 +40,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/{user:username}/{linkList:slug}', [LinkListsController::class, 'show'])
+    ->scopeBindings()
+    ->name('link-lists.show');

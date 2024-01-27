@@ -20,4 +20,9 @@ class LinkList extends Model
     {
         return $this->links()->create($attributes);
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
 }

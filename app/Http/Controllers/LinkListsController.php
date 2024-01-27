@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LinkList;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class LinkListsController extends Controller
 {
+    public function show(User $user, LinkList $linkList)
+    {
+        return inertia('LinkLists/Show', [
+            'linkList' => $linkList,
+            'links' => $linkList->links()->orderBy('order')->get(),
+        ]);
+    }
+
     public function store()
     {
         /** @var \App\Models\User $user */
@@ -41,5 +51,5 @@ class LinkListsController extends Controller
             'links.*.url' => 'required|url',
             'links.*.order' => 'required|between:1,10',
         ]);
-    }
+    }    
 }

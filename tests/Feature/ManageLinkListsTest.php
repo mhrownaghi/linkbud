@@ -183,4 +183,18 @@ class ManageLinkListsTest extends TestCase
             ->post('/link-lists', $attribute)
             ->assertSessionHasErrors('links.*.order');
     }
+
+    /** @test */
+    public function a_user_can_view_a_link_list()
+    {
+        $this->withoutExceptionHandling();
+        $linkList = LinkList::factory()->create();
+        $links = Link::factory(1)->create(['link_list_id' => $linkList->id]);
+
+        $this->get("/{$linkList->owner->username}/{$linkList->slug}")
+            ->assertOk()
+            ->assertSee($linkList->name)
+            ->assertSee($linkList->description)
+            ->assertSee($links[0]->name);
+    }
 }
